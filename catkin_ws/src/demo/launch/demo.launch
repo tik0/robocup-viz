@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+ <launch>
+
+  <node pkg="map_publisher" type="map_publisher" name="map_publisher_node" respawn="true" >
+    <param name="frame_id" value="world" />
+    <param name="map_image_path" value="/opt/repositories/robocup-viz/maps/centralLab.png" />
+    <param name="map_topic" value="map" />
+    <param name="image_resolution" value="0.1" /> <!-- m/cell -->
+    <param name="rate" value="1" />
+  </node>
+
+  <node pkg="pose_to_tf_bridge" type="pose_to_tf_bridge" name="pose_to_tf_bridge_amiro1_node" respawn="true" >
+    <param name="frame_id" value="world" />
+    <param name="child_frame" value="amiro1" />
+    <param name="rsb_scope" value="/amiro1/pose" />
+    <param name="rate" value="10" />
+  </node>
+
+  <node pkg="pose_to_tf_bridge" type="pose_to_tf_bridge" name="pose_to_tf_bridge_amiro2_node" respawn="true" >
+    <param name="frame_id" value="world" />
+    <param name="child_frame" value="amiro2" />
+    <param name="rsb_scope" value="/amiro2/pose" />
+    <param name="rate" value="10" />
+  </node>
+
+  <node pkg="pose_to_tf_bridge" type="pose_to_tf_bridge" name="pose_to_tf_bridge_tobi_node" respawn="true" >
+    <param name="frame_id" value="world" />
+    <param name="child_frame" value="tobi" />
+    <param name="rsb_scope" value="/tobi/pose" />
+    <param name="rate" value="10" />
+  </node>
+
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find demo)/demo.rviz" respawn="true" />
+ </launch>
