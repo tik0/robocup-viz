@@ -2,12 +2,13 @@
  <launch>
 
   <arg name="map_image_path" default="/opt/repositories/robocup-viz/maps/centralLab.png" />
+  <arg name="map_resolution" default="0.1" />
 
   <node pkg="map_publisher" type="map_publisher" name="map_publisher_node" respawn="true" >
     <param name="frame_id" value="map" />
     <param name="map_image_path" value="$(arg map_image_path)" />
     <param name="map_topic" value="map" />
-    <param name="image_resolution" value="0.1" /> <!-- m/cell -->
+    <param name="image_resolution" value="$(arg map_resolution)" /> <!-- m/cell -->
     <param name="rate" value="1" />
   </node>
 
