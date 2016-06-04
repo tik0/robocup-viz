@@ -1,9 +1,11 @@
 <?xml version="1.0"?>
  <launch>
 
+  <arg name="map_image_path" default="/opt/repositories/robocup-viz/maps/centralLab.png" />
+
   <node pkg="map_publisher" type="map_publisher" name="map_publisher_node" respawn="true" >
     <param name="frame_id" value="map" />
-    <param name="map_image_path" value="/opt/repositories/robocup-viz/maps/centralLab.png" />
+    <param name="map_image_path" value="$(arg map_image_path)" />
     <param name="map_topic" value="map" />
     <param name="image_resolution" value="0.1" /> <!-- m/cell -->
     <param name="rate" value="1" />
@@ -30,11 +32,16 @@
     <param name="rate" value="10" />
   </node>
   
-  <node pkg="rospose_to_rsbpose_bridge" type="rospose_to_rsbpose_bridge" name="rospose_to_rsbpose_bridge_node" respawn="true" >
-    <param name="rsbScope" value="/amiro1" />
-    <param name="rosTopic" value="/initialpose" />
+  <node pkg="rospose_to_rsbpose_bridge" type="rospose_to_rsbpose_bridge" name="rospose_to_rsbpose_bridge_node_1" respawn="true" >
+    <param name="rsb_scope" value="/setPosition/1" />
+    <param name="ros_topic" value="/initialpose/1" />
   </node>
   
+  <node pkg="rospose_to_rsbpose_bridge" type="rospose_to_rsbpose_bridge" name="rospose_to_rsbpose_bridge_node_0" respawn="true" >
+    <param name="rsb_scope" value="/setPosition/0" />
+    <param name="ros_topic" value="/initialpose/0" />
+  </node>
+
   <node pkg="tf" type="static_transform_publisher" name="map_tf" args="0 0 0 0 0 0 world map 10" />
 
   <node name="rviz" pkg="rviz" type="rviz" args="-d $(find demo)/demo.rviz" respawn="true" />
