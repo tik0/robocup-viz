@@ -43,6 +43,16 @@
     <param name="ros_topic" value="/initialpose/0" />
   </node>
 
+  <node pkg="rsb_path_to_ros_path" type="rsb_path_to_ros_path_node" name="rsb_path_to_ros_path_node_1" respawn="true">
+	  <param name="rsb_scope" value="/amiro1/path" />
+	  <param name="ros_topic" value="/amiro1/path" />
+  </node>
+  
+  <node pkg="rsb_path_to_ros_path" type="rsb_path_to_ros_path_node" name="rsb_path_to_ros_path_node_0" respawn="true">
+	  <param name="rsb_scope" value="/amiro0/path" />
+	  <param name="ros_topic" value="/amiro0/path" />
+  </node>
+
   <node pkg="tf" type="static_transform_publisher" name="map_tf" args="0 0 0 0 0 0 world map 10" />
 
   <node name="rviz" pkg="rviz" type="rviz" args="-d $(find demo)/demo.rviz" respawn="true" />
