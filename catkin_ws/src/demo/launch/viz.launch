@@ -76,7 +76,7 @@
   <include file="$(find demo)/launch/robot_viz.xml">
     <arg name="description" value="$(find xacro)/xacro.py $(find tobi_description)/urdf/tobi_3of4.urdf.xacro" />
     <arg name="use_joint_state_publisher" value="true"/>
-    <arg name="gui" value="true" />  
+    <arg name="gui" value="false" />  
     <arg name="model_prefix" value="tobi" />
   </include>
   
@@ -85,18 +85,27 @@
   <include file="$(find demo)/launch/robot_viz.xml">
     <arg name="description" value="$(find xacro)/xacro.py $(find meka_description)/robots/bie.urdf.xacro hand_mimic:=true torso_mimic:=true" />
     <arg name="use_joint_state_publisher" value="true"/>
-    <arg name="gui" value="true" />  
+    <arg name="gui" value="false" />  
     <arg name="model_prefix" value="meka" />
   </include>
   
   <!-- ROBOT MODELS: AMiRo1 -->
-<!--  <node pkg="tf" type="static_transform_publisher" name="meka_tf" args="12 12 0 1 0 0 world amiro1/base_link 10"/>
+  <node pkg="tf" type="static_transform_publisher" name="amiro1_tf" args="12 12 0 1 0 0 world amiro1/base_link 10"/>
   <include file="$(find demo)/launch/robot_viz.xml">
-    <arg name="description" value="$(find xacro)/xacro.py $(find meka_description)/robots/bie.urdf.xacro hand_mimic:=true torso_mimic:=true" />
-    <arg name="use_joint_state_publisher" value="false"/>
+    <arg name="description" value="$(find xacro)/xacro.py $(find demo)/urdf/amiro.urdf" />
+    <arg name="use_joint_state_publisher" value="true"/>
     <arg name="gui" value="false" />  
-    <arg name="model_prefix" type="string" value="amiro1" />
-  </include>-->
+    <arg name="model_prefix" value="amiro1" />
+  </include>
+  
+  <!-- ROBOT MODELS: AMiRo2 -->
+  <node pkg="tf" type="static_transform_publisher" name="amiro2_tf" args="12 12.5 0 1 0 0 world amiro2/base_link 10"/>
+  <include file="$(find demo)/launch/robot_viz.xml">
+    <arg name="description" value="$(find xacro)/xacro.py $(find demo)/urdf/amiro.urdf" />
+    <arg name="use_joint_state_publisher" value="true"/>
+    <arg name="gui" value="false" />  
+    <arg name="model_prefix" value="amiro2" />
+  </include>
   
   <node name="rviz" pkg="rviz" type="rviz" args="-d $(find demo)/demo.rviz" respawn="true" />
  </launch>
