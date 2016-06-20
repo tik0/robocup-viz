@@ -1,6 +1,9 @@
-[submodule "catkin_ws/src/gazebo2rviz"]
-	path = catkin_ws/src/gazebo2rviz
-	url = https://github.com/andreasBihlmaier/gazebo2rviz.git
-[submodule "catkin_ws/src/pysdf"]
-	path = catkin_ws/src/pysdf
-	url = https://github.com/andreasBihlmaier/pysdf
+[submodule "catkin_ws/src/katana_driver"]
+	path = catkin_ws/src/katana_driver
+	url = https://github.com/CentralLabFacilities/katana_driver.git
+[submodule "catkin_ws/src/meka-ros-pkg"]
+	path = catkin_ws/src/meka-ros-pkg
+	url = https://github.com/CentralLabFacilities/meka-ros-pkg.git
+[submodule "catkin_ws/src/tobi_robot"]
+	path = catkin_ws/src/tobi_robot
+	url = https://github.com/CentralLabFacilities/tobi_robot.git

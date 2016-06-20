@@ -10,8 +10,9 @@ Panels:
         - /TF1
         - /Path AMiRo 11
         - /Path AMiRo 01
+        - /ToBi1
       Splitter Ratio: 0.497317
-    Tree Height: 707
+    Tree Height: 731
   - Class: rviz/Selection
     Name: Selection
   - Class: rviz/Tool Properties
@@ -73,7 +74,177 @@ Visualization Manager:
           Value: true
         map:
           Value: true
+        meka/BB2:
+          Value: true
+        meka/base_link:
+          Value: true
+        meka/bicep_LEFT:
+          Value: true
+        meka/bicep_RIGHT:
+          Value: true
+        meka/dummy_1:
+          Value: true
+        meka/dummy_2:
+          Value: true
+        meka/dummy_3:
+          Value: true
+        meka/elbowclevis_LEFT:
+          Value: true
+        meka/elbowclevis_RIGHT:
+          Value: true
+        meka/hand_tool_frame_left:
+          Value: true
+        meka/hand_tool_frame_right:
+          Value: true
+        meka/handmount_LEFT:
+          Value: true
+        meka/handmount_RIGHT:
+          Value: true
+        meka/index0_left:
+          Value: true
+        meka/index0_right:
+          Value: true
+        meka/index1_left:
+          Value: true
+        meka/index1_right:
+          Value: true
+        meka/index2_left:
+          Value: true
+        meka/index2_right:
+          Value: true
+        meka/index_motor_left:
+          Value: true
+        meka/index_motor_right:
+          Value: true
+        meka/index_tip_left:
+          Value: true
+        meka/index_tip_right:
+          Value: true
+        meka/mid:
+          Value: true
+        meka/neck_pan:
+          Value: true
+        meka/palm_left:
+          Value: true
+        meka/palm_right:
+          Value: true
+        meka/panplate:
+          Value: true
+        meka/pinky0_left:
+          Value: true
+        meka/pinky0_right:
+          Value: true
+        meka/pinky1_left:
+          Value: true
+        meka/pinky1_right:
+          Value: true
+        meka/pinky2_left:
+          Value: true
+        meka/pinky2_right:
+          Value: true
+        meka/pinky_motor_left:
+          Value: true
+        meka/pinky_motor_right:
+          Value: true
+        meka/pinky_tip_left:
+          Value: true
+        meka/pinky_tip_right:
+          Value: true
+        meka/ring0_left:
+          Value: true
+        meka/ring0_right:
+          Value: true
+        meka/ring1_left:
+          Value: true
+        meka/ring1_right:
+          Value: true
+        meka/ring2_left:
+          Value: true
+        meka/ring2_right:
+          Value: true
+        meka/ring_motor_left:
+          Value: true
+        meka/ring_motor_right:
+          Value: true
+        meka/ring_tip_left:
+          Value: true
+        meka/ring_tip_right:
+          Value: true
+        meka/shell:
+          Value: true
+        meka/shoulderpitch_LEFT:
+          Value: true
+        meka/shoulderpitch_RIGHT:
+          Value: true
+        meka/shoulderupper_LEFT:
+          Value: true
+        meka/shoulderupper_RIGHT:
+          Value: true
+        meka/thumb0_left:
+          Value: true
+        meka/thumb0_right:
+          Value: true
+        meka/thumb1_left:
+          Value: true
+        meka/thumb1_right:
+          Value: true
+        meka/thumb2_left:
+          Value: true
+        meka/thumb2_right:
+          Value: true
+        meka/thumb_motor_left:
+          Value: true
+        meka/thumb_motor_right:
+          Value: true
+        meka/thumb_tip_left:
+          Value: true
+        meka/thumb_tip_right:
+          Value: true
+        meka/torso:
+          Value: true
+        meka/upper:
+          Value: true
+        meka/w_differential_LEFT:
+          Value: true
+        meka/w_differential_RIGHT:
+          Value: true
+        meka/wrist_LEFT:
+          Value: true
+        meka/wrist_RIGHT:
+          Value: true
+        meka/zlift_link:
+          Value: true
         tobi:
+          Value: true
+        tobi/base_link:
+          Value: true
+        tobi/box_head_link:
+          Value: true
+        tobi/guiabot:
+          Value: true
+        tobi/katana_base_link:
+          Value: true
+        tobi/katana_gripper_link:
+          Value: true
+        tobi/katana_gripper_tool_agni_frame:
+          Value: true
+        tobi/katana_gripper_tool_frame:
+          Value: true
+        tobi/katana_l_finger_link:
+          Value: true
+        tobi/katana_motor1_pan_link:
+          Value: true
+        tobi/katana_motor2_lift_link:
+          Value: true
+        tobi/katana_motor3_lift_link:
+          Value: true
+        tobi/katana_motor4_lift_link:
+          Value: true
+        tobi/katana_motor5_wrist_roll_link:
+          Value: true
+        tobi/katana_r_finger_link:
+          Value: true
+        tobi/sensor_head_link:
           Value: true
         world:
           Value: true
@@ -90,8 +261,117 @@ Visualization Manager:
             {}
           map:
             {}
+          meka/base_link:
+            meka/dummy_1:
+              meka/dummy_2:
+                meka/dummy_3:
+                  meka/zlift_link:
+                    meka/panplate:
+                      meka/torso:
+                        meka/mid:
+                          meka/upper:
+                            meka/neck_pan:
+                              meka/shell:
+                                meka/BB2:
+                                  {}
+                            meka/shoulderupper_LEFT:
+                              meka/shoulderpitch_LEFT:
+                                meka/bicep_LEFT:
+                                  meka/elbowclevis_LEFT:
+                                    meka/wrist_LEFT:
+                                      meka/w_differential_LEFT:
+                                        meka/handmount_LEFT:
+                                          meka/hand_tool_frame_left:
+                                            {}
+                                          meka/palm_left:
+                                            meka/index0_left:
+                                              meka/index1_left:
+                                                meka/index2_left:
+                                                  meka/index_tip_left:
+                                                    {}
+                                            meka/index_motor_left:
+                                              {}
+                                            meka/pinky0_left:
+                                              meka/pinky1_left:
+                                                meka/pinky2_left:
+                                                  meka/pinky_tip_left:
+                                                    {}
+                                            meka/pinky_motor_left:
+                                              {}
+                                            meka/ring0_left:
+                                              meka/ring1_left:
+                                                meka/ring2_left:
+                                                  meka/ring_tip_left:
+                                                    {}
+                                            meka/ring_motor_left:
+                                              {}
+                                            meka/thumb0_left:
+                                              meka/thumb1_left:
+                                                meka/thumb2_left:
+                                                  meka/thumb_tip_left:
+                                                    {}
+                                            meka/thumb_motor_left:
+                                              {}
+                            meka/shoulderupper_RIGHT:
+                              meka/shoulderpitch_RIGHT:
+                                meka/bicep_RIGHT:
+                                  meka/elbowclevis_RIGHT:
+                                    meka/wrist_RIGHT:
+                                      meka/w_differential_RIGHT:
+                                        meka/handmount_RIGHT:
+                                          meka/hand_tool_frame_right:
+                                            {}
+                                          meka/palm_right:
+                                            meka/index0_right:
+                                              meka/index1_right:
+                                                meka/index2_right:
+                                                  meka/index_tip_right:
+                                                    {}
+                                            meka/index_motor_right:
+                                              {}
+                                            meka/pinky0_right:
+                                              meka/pinky1_right:
+                                                meka/pinky2_right:
+                                                  meka/pinky_tip_right:
+                                                    {}
+                                            meka/pinky_motor_right:
+                                              {}
+                                            meka/ring0_right:
+                                              meka/ring1_right:
+                                                meka/ring2_right:
+                                                  meka/ring_tip_right:
+                                                    {}
+                                            meka/ring_motor_right:
+                                              {}
+                                            meka/thumb0_right:
+                                              meka/thumb1_right:
+                                                meka/thumb2_right:
+                                                  meka/thumb_tip_right:
+                                                    {}
+                                            meka/thumb_motor_right:
+                                              {}
           tobi:
             {}
+          tobi/base_link:
+            tobi/guiabot:
+              tobi/box_head_link:
+                tobi/sensor_head_link:
+                  {}
+              tobi/katana_base_link:
+                tobi/katana_motor1_pan_link:
+                  tobi/katana_motor2_lift_link:
+                    tobi/katana_motor3_lift_link:
+                      tobi/katana_motor4_lift_link:
+                        tobi/katana_motor5_wrist_roll_link:
+                          tobi/katana_gripper_link:
+                            tobi/katana_l_finger_link:
+                              {}
+                            tobi/katana_r_finger_link:
+                              {}
+                          tobi/katana_gripper_tool_agni_frame:
+                            {}
+                          tobi/katana_gripper_tool_frame:
+                            {}
       Update Interval: 0
       Value: true
     - Alpha: 1
@@ -124,10 +404,375 @@ Visualization Manager:
       Topic: /amiro0/path
       Unreliable: false
       Value: true
+    - Alpha: 1
+      Class: rviz/RobotModel
+      Collision Enabled: false
+      Enabled: true
+      Links:
+        All Links Enabled: true
+        Expand Joint Details: false
+        Expand Link Details: false
+        Expand Tree: false
+        Link Tree Style: Links in Alphabetic Order
+      Name: ToBi
+      Robot Description: tobi_description
+      TF Prefix: tobi
+      Update Interval: 0
+      Value: true
+      Visual Enabled: true
+    - Alpha: 1
+      Class: rviz/RobotModel
+      Collision Enabled: false
+      Enabled: true
+      Links:
+        All Links Enabled: true
+        BB2:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        Expand Joint Details: false
+        Expand Link Details: false
+        Expand Tree: false
+        Link Tree Style: Links in Alphabetic Order
+        base_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        bicep_LEFT:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        bicep_RIGHT:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        dummy_1:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        dummy_2:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        dummy_3:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        elbowclevis_LEFT:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        elbowclevis_RIGHT:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        hand_tool_frame_left:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        hand_tool_frame_right:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        handmount_LEFT:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        handmount_RIGHT:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        index0_left:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        index0_right:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        index1_left:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        index1_right:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        index2_left:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        index2_right:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        index_motor_left:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        index_motor_right:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        index_tip_left:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        index_tip_right:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        mid:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        neck_pan:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        palm_left:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        palm_right:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        panplate:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        pinky0_left:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        pinky0_right:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        pinky1_left:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        pinky1_right:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        pinky2_left:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        pinky2_right:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        pinky_motor_left:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        pinky_motor_right:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        pinky_tip_left:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        pinky_tip_right:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        ring0_left:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        ring0_right:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        ring1_left:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        ring1_right:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        ring2_left:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        ring2_right:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        ring_motor_left:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        ring_motor_right:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        ring_tip_left:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        ring_tip_right:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        shell:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        shoulderpitch_LEFT:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        shoulderpitch_RIGHT:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        shoulderupper_LEFT:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        shoulderupper_RIGHT:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        thumb0_left:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        thumb0_right:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        thumb1_left:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        thumb1_right:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        thumb2_left:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        thumb2_right:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        thumb_motor_left:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        thumb_motor_right:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        thumb_tip_left:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        thumb_tip_right:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        torso:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        upper:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        w_differential_LEFT:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        w_differential_RIGHT:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        wrist_LEFT:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        wrist_RIGHT:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        zlift_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+      Name: Meka
+      Robot Description: meka_description
+      TF Prefix: meka
+      Update Interval: 0
+      Value: true
+      Visual Enabled: true
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
-    Fixed Frame: world
+    Fixed Frame: tobi/base_link
     Frame Rate: 30
   Name: root
   Tools:
@@ -148,7 +793,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 0.77083
+      Distance: 9.75148
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.06
         Stereo Focal Distance: 1
@@ -160,10 +805,10 @@ Visualization Manager:
         Z: 0
       Name: Current View
       Near Clip Distance: 0.01
-      Pitch: 0.9754
+      Pitch: 0.3004
       Target Frame: base_link_mount
       Value: Orbit (rviz)
-      Yaw: 4.3304
+      Yaw: 2.4204
     Saved: ~
 Window Geometry:
   Displays:
@@ -171,7 +816,7 @@ Window Geometry:
   Height: 1018
   Hide Left Dock: false
   Hide Right Dock: false
-  QMainWindow State: 000000ff00000000fd00000004000000000000023b00000355fc0200000008fb0000001200530065006c0065006300740069006f006e00000001e10000009b0000006700fffffffb000000120056006900650077007300200054006f006f02000001df000002110000018500000122fb000000200054006f006f006c002000500072006f0070006500720074006900650073003203000002880000011d000002210000017afb000000100044006900730070006c006100790073010000004300000355000000e300fffffffb0000002000730065006c0065006300740069006f006e00200062007500660066006500720200000138000000aa0000023a00000294fb00000014005700690064006500530074006500720065006f02000000e6000000d2000003ee0000030bfb0000000c004b0069006e0065006300740200000186000001060000030c00000261fb0000000a0049006d00610067006501000002cf000000cd0000000000000000000000010000015600000355fc0200000004fb0000001e0054006f006f006c002000500072006f007000650072007400690065007301000000430000007e0000006700fffffffb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000043000000a30000000000000000fb0000000a0056006900650077007301000000c7000002d1000000b300fffffffb0000001200530065006c0065006300740069006f006e010000025a000000b200000000000000000000000200000490000000a9fc0100000001fb0000000a00560069006500770073030000004e00000080000002e10000019700000003000006900000003efc0100000002fb0000000800540069006d00650100000000000006900000023a00fffffffb0000000800540069006d00650100000000000004500000000000000000000002f30000035500000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  QMainWindow State: 000000ff00000000fd00000004000000000000023b00000369fc0200000008fb0000001200530065006c0065006300740069006f006e00000001e10000009b0000006901000005fb000000120056006900650077007300200054006f006f02000001df000002110000018500000122fb000000200054006f006f006c002000500072006f0070006500720074006900650073003203000002880000011d000002210000017afb000000100044006900730070006c006100790073010000003300000369000000d801000005fb0000002000730065006c0065006300740069006f006e00200062007500660066006500720200000138000000aa0000023a00000294fb00000014005700690064006500530074006500720065006f02000000e6000000d2000003ee0000030bfb0000000c004b0069006e0065006300740200000186000001060000030c00000261fb0000000a0049006d00610067006501000002cf000000cd0000000000000000000000010000015600000369fc0200000004fb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000033000000810000006901000005fb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000043000000a30000000000000000fb0000000a0056006900650077007301000000b7000002e5000000ab01000005fb0000001200530065006c0065006300740069006f006e010000025a000000b200000000000000000000000200000490000000a9fc0100000001fb0000000a00560069006500770073030000004e00000080000002e10000019700000003000006900000003efc0100000002fb0000000800540069006d00650100000000000006900000027701000005fb0000000800540069006d00650100000000000004500000000000000000000002f90000036900000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
   Selection:
     collapsed: false
   Time:
@@ -181,5 +826,5 @@ Window Geometry:
   Views:
     collapsed: false
   Width: 1680
-  X: 234
-  Y: 25
+  X: 1920
+  Y: 120

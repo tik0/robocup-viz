@@ -59,16 +59,44 @@
 
   <!-- display path -->
   <node pkg="rsb_path_to_ros_path" type="rsb_path_to_ros_path_node" name="rsb_path_to_ros_path_node_1" respawn="true">
-	  <param name="rsb_scope" value="/amiro1/path" />
-	  <param name="ros_topic" value="/amiro1/path" />
+    <param name="rsb_scope" value="/amiro1/path" />
+    <param name="ros_topic" value="/amiro1/path" />
   </node>
   
   <node pkg="rsb_path_to_ros_path" type="rsb_path_to_ros_path_node" name="rsb_path_to_ros_path_node_0" respawn="true">
-	  <param name="rsb_scope" value="/amiro0/path" />
-	  <param name="ros_topic" value="/amiro0/path" />
+    <param name="rsb_scope" value="/amiro0/path" />
+    <param name="ros_topic" value="/amiro0/path" />
   </node>
 
   <node pkg="tf" type="static_transform_publisher" name="map_tf" args="0 0 0 0 0 0 world map 10" />
 
+
+  <!-- ROBOT MODELS: TOBI -->
+  <node pkg="tf" type="static_transform_publisher" name="tobi_tf" args="10 12 0 1 0 0 world tobi/base_link 10"/>
+  <include file="$(find demo)/launch/robot_viz.xml">
+    <arg name="description" value="$(find xacro)/xacro.py $(find tobi_description)/urdf/tobi_3of4.urdf.xacro" />
+    <arg name="use_joint_state_publisher" value="true"/>
+    <arg name="gui" value="true" />  
+    <arg name="model_prefix" value="tobi" />
+  </include>
+  
+  <!-- ROBOT MODELS: MEKA -->
+  <node pkg="tf" type="static_transform_publisher" name="meka_tf" args="10 10 0 1 0 0 world meka/base_link 10"/>
+  <include file="$(find demo)/launch/robot_viz.xml">
+    <arg name="description" value="$(find xacro)/xacro.py $(find meka_description)/robots/bie.urdf.xacro hand_mimic:=true torso_mimic:=true" />
+    <arg name="use_joint_state_publisher" value="true"/>
+    <arg name="gui" value="true" />  
+    <arg name="model_prefix" value="meka" />
+  </include>
+  
+  <!-- ROBOT MODELS: AMiRo1 -->
+<!--  <node pkg="tf" type="static_transform_publisher" name="meka_tf" args="12 12 0 1 0 0 world amiro1/base_link 10"/>
+  <include file="$(find demo)/launch/robot_viz.xml">
+    <arg name="description" value="$(find xacro)/xacro.py $(find meka_description)/robots/bie.urdf.xacro hand_mimic:=true torso_mimic:=true" />
+    <arg name="use_joint_state_publisher" value="false"/>
+    <arg name="gui" value="false" />  
+    <arg name="model_prefix" type="string" value="amiro1" />
+  </include>-->
+  
   <node name="rviz" pkg="rviz" type="rviz" args="-d $(find demo)/demo.rviz" respawn="true" />
  </launch>
