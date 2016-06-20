@@ -1,0 +1,6 @@
+[submodule "catkin_ws/src/gazebo2rviz"]
+	path = catkin_ws/src/gazebo2rviz
+	url = https://github.com/andreasBihlmaier/gazebo2rviz.git
+[submodule "catkin_ws/src/pysdf"]
+	path = catkin_ws/src/pysdf
+	url = https://github.com/andreasBihlmaier/pysdf
