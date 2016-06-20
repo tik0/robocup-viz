@@ -9,10 +9,9 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
 )
 
-find_package(RSB 0.13 REQUIRED)
-find_package(RST 0.13 REQUIRED)
-
-add_definitions("-std=c++11 ${RST_CFLAGS}")
+find_package(RSB REQUIRED)
+find_package(RSC REQUIRED)
+find_package(RST REQUIRED COMPONENTS sandbox)
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
@@ -194,3 +193,5 @@ target_link_libraries(rsb_path_to_ros_path_node
 
 ## Add folders to be run by python nosetests
 # catkin_add_nosetests(test)
+
+add_definitions("-std=c++11" ${RST_CFLAGS} ${RSTSANDBOX_CFLAGS})
