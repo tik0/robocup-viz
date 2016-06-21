@@ -8,5 +8,5 @@ CHECKOUT RECURSIVE
 RUN
 =
 * Source "devel/setup.sh"
-* Run "roslaunch demo viz.launch"
+* Run "spread && roslaunch demo viz.launch"
 
