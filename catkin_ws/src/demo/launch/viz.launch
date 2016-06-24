@@ -1,17 +1,10 @@
 <?xml version="1.0"?>
  <launch>
 
-  <arg name="map_image_path" default="/opt/repositories/robocup-viz/maps/centralLab.png" />
-  <arg name="map_resolution" default="0.1" />
+  <arg name="map_yaml" default="/opt/repositories/robocup-viz/maps/centralLab.yaml" />
 
   <!-- publishes the map -->
-  <node pkg="map_publisher" type="map_publisher" name="map_publisher_node" respawn="true" >
-    <param name="frame_id" value="map" />
-    <param name="map_image_path" value="$(arg map_image_path)" />
-    <param name="map_topic" value="map" />
-    <param name="image_resolution" value="$(arg map_resolution)" /> <!-- m/cell -->
-    <param name="rate" value="1" />
-  </node>
+  <node pkg="map_server" type="map_server" args="$(arg map_yaml)" name="map_server_node" respawn="true" />
 
   <!-- converts RSB poses to ROS transform -->
   <node pkg="pose_to_tf_bridge" type="pose_to_tf_bridge" name="pose_to_tf_bridge_amiro0_node" respawn="true" >
