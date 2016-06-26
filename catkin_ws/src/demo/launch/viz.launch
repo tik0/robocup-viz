@@ -113,7 +113,7 @@
   <!--<node pkg="tf" type="static_transform_publisher" name="tobi_tf" args="10 12 0 1 0 0 world tobi/base_link 10"/>-->
   <include file="$(find demo)/launch/robot_viz.xml">
     <arg name="description" value="$(find xacro)/xacro.py $(find tobi_description)/urdf/tobi_3of4.urdf.xacro" />
-    <arg name="use_joint_state_publisher" value="false"/>
+    <arg name="use_joint_state_publisher" value="true"/>
     <arg name="gui" value="false" />  
     <arg name="model_prefix" value="tobi" />
   </include>
@@ -122,7 +122,7 @@
   <node pkg="tf" type="static_transform_publisher" name="meka_tf" args="10 10 0 1 0 0 world meka/base_link 10"/>
   <include file="$(find demo)/launch/robot_viz.xml">
     <arg name="description" value="$(find xacro)/xacro.py $(find meka_description)/robots/bie.urdf.xacro hand_mimic:=true torso_mimic:=true" />
-    <arg name="use_joint_state_publisher" value="false"/>
+    <arg name="use_joint_state_publisher" value="true"/>
     <arg name="gui" value="false" />  
     <arg name="model_prefix" value="meka" />
   </include>
