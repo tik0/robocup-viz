@@ -21,7 +21,7 @@
       <geometry>
         <cylinder length="0.08" radius="0.05"/>
       </geometry>
-      <material name="white"/>
+      <material name="blue"/>
     </visual>
   </link>
 
