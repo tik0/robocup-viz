@@ -73,25 +73,17 @@
   </node>
 
   <!-- visualize RSB communication -->
-  <include file="$(find demo)/launch/com_viz.launch">
-    <arg name="src" value="tobi" />  
-    <arg name="dst" value="amiro0" />
-  </include>
-
-  <include file="$(find demo)/launch/com_viz.launch">
-    <arg name="src" value="tobi" />  
-    <arg name="dst" value="amiro1" />
-  </include>
-  
-  <include file="$(find demo)/launch/com_viz.launch">
-    <arg name="src" value="tobi" />  
-    <arg name="dst" value="amiro2" />
-  </include>
-  
-  <include file="$(find demo)/launch/com_viz.launch">
-    <arg name="src" value="tobi" />  
-    <arg name="dst" value="amiro3" />
-  </include>
+  <node pkg="com_viz" type="com_viz" name="com_viz_state" respawn="true" >
+    <param name="rsb_viz_scope" value="/" />
+    <param name="marker_remain_time" value="1.0" />
+    <param name="marker_scale_x" value="0.03" />
+    <param name="marker_scale_y" value="0.06" />
+    <param name="marker_scale_z" value="1.0" />
+    <param name="marker_color_a" value="1.0" />
+    <param name="marker_color_r" value="0.0" />
+    <param name="marker_color_g" value="1.0" />
+    <param name="marker_color_b" value="0.0" />
+  </node>
   
 
   <node pkg="navgoal_to_rsbpose_bridge" type="navgoal_to_rsbpose_bridge" name="navgoal_to_rsbpose_bridge_node_1" respawn="true" >

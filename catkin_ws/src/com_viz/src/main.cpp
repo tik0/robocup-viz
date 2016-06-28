@@ -9,6 +9,11 @@
 #include <rsb/Handler.h>
 #include <rsb/converter/Repository.h>
 #include <rsb/converter/ProtocolBufferConverter.h>
+#include <boost/regex.hpp>
+#include <boost/lexical_cast.hpp>
+
+#include <mutex>
+
 //#include <rsc/misc/SignalWaiter.h>
 //#include <rsc/threading/PeriodicTask.h>
 //#include <rsc/threading/ThreadedTaskExecutor.h>
@@ -23,62 +28,80 @@
 using namespace rsb;
 using namespace rsb::converter;
 
-static std::string parentFrame;
-static std::string childFrame;
 static std::string rsbScope;
 
 ros::Publisher vis_pub;
 
 tf::TransformListener *listener;
 
+std::vector<std::string> robotNames;
+
+static std::size_t markerId = 0;
+std::mutex idMtx;
+double makerRemainTime;
+
+double markerScaleX;
+double markerScaleY;
+double markerScaleZ;
+double markerColorA;
+double markerColorR;
+double markerColorG;
+double markerColorB;
+
 void vizScope(rsb::EventPtr msg) {
   // Get the parent scope
-  std::cerr << "REC: " << msg->getScope().getComponents().at(0) << std::endl << std::flush;
+  ROS_INFO("REC: %s/n", msg->getScope().getComponents().at(0).c_str());
 
-//  tf::TransformListener listener;
+  // Communication sceme: /robot[1]anotherrobot[3]/[state] -> [Content as string]
+  std::string robots(msg->getScope().getComponents().at(0));
+  std::string state(msg->getScope().getComponents().at(1));
+  std::string content(*boost::static_pointer_cast<std::string>(msg->getData()));
+
+  std::string src, dst;
+
+  // Get the origin
+  for ( int idx = 0; idx < robotNames.size(); ++idx) {
+    boost::regex srcRegex(std::string("([^ ]*)") + robotNames.at(idx) + std::string("([0-9]*)"));
+    boost::cmatch charMatches;
+    if (boost::regex_match(robots.c_str(), charMatches, srcRegex)) {
+      // Copy the found string
+      src = charMatches[1].str();
+      for (int idy = 0; idy < charMatches.size(); ++idy) {
+        ROS_DEBUG("match: %s\n", charMatches[idy].str().c_str());
+      }
+    }
+  }
+  // The rest must be the the destination
+  dst = std::string(&robots.c_str()[src.size()]);
+
+  ROS_INFO("src robot: %s/n", src.c_str());
+  ROS_INFO("dst robot: %s/n", dst.c_str());
+
   tf::StampedTransform transform;
-//  try{
-//    listener.lookupTransform(parentFrame, childFrame, ros::Time(0), transform);
-//    std::string* error_msg = NULL;
-//    listener->waitForTransform(childFrame, parentFrame, ros::Time(0), ros::Duration(1.0 /*sec*/), ros::Duration(0.01), error_msg);
-//    if (error_msg != NULL) {
-//      ROS_ERROR("Tf Error: %s",error_msg->c_str());
-//      std::cerr << "Tf Error: " << *error_msg << std::endl << std::flush;
-//      ros::Duration(1.0).sleep();
-//    }
-//  }
-//  catch (tf::TransformException &ex){
-//    ROS_ERROR("%s",ex.what());
-//    ros::Duration(1.0).sleep();
-//  }
-
-    try{
-      listener->lookupTransform(childFrame, parentFrame,
-                               ros::Time(0), transform);
-    }
-    catch (tf::TransformException &ex) {
-      ROS_ERROR("%s",ex.what());
-      ros::Duration(1.0).sleep();
-      return;
-    }
+  try{
+    listener->lookupTransform(dst + std::string("/base_link"), src + std::string("/base_link"), ros::Time(0), transform);
+  }
+  catch (tf::TransformException &ex) {
+    ROS_ERROR("%s",ex.what());
+    return;
+  }
 
   visualization_msgs::Marker marker;
-  marker.header.frame_id = parentFrame;
+  marker.header.frame_id = src + std::string("/base_link");
   marker.header.stamp = ros::Time();
   marker.ns = "";
-  marker.id = 0;
+  idMtx.lock();
+    if (markerId < std::numeric_limits<std::size_t>::max()) {
+      marker.id = ++markerId;
+    } else {
+      markerId = 0;
+    }
+  idMtx.unlock();
+
+  // Configure the marker
   marker.type = visualization_msgs::Marker::ARROW;
   marker.action = visualization_msgs::Marker::ADD;
   geometry_msgs::Point child, parent;
-
-
-//  std::cerr << "x: " << transform.getOrigin().x() << std::endl;
-//  std::cerr << "y: " << transform.getOrigin().y() << std::endl;
-//  std::cerr << "z: " << transform.getOrigin().z() << std::endl;
-//
-//  std::cerr << "x: " << transform.getOrigin().getX() << std::endl;
-//    std::cerr << "y: " << transform.getOrigin().getY() << std::endl;
-//    std::cerr << "z: " << transform.getOrigin().getZ() << std::endl;
 
   parent.x = 0.0;
   parent.y = 0.0;
@@ -97,22 +120,27 @@ void vizScope(rsb::EventPtr msg) {
 //  marker.pose.orientation.y = transform.getRotation().getY();
 //  marker.pose.orientation.z = transform.getRotation().getZ();
 //  marker.pose.orientation.w = transform.getRotation().getW();
-  marker.scale.x = 0.03;
-  marker.scale.y = 0.06;
-  marker.scale.z = 1.0;
-  marker.color.a = 1.0; // Don't forget to set the alpha!
-  marker.color.r = 0.0;
-  marker.color.g = 1.0;
-  marker.color.b = 0.0;
-  //only if using a MESH_RESOURCE marker type:
+  marker.scale.x = markerScaleX;
+  marker.scale.y = markerScaleY;
+  marker.scale.z = markerScaleZ;
+  marker.color.a = markerColorA;
+  marker.color.r = markerColorR;
+  marker.color.g = markerColorG;
+  marker.color.b = markerColorB;
   marker.mesh_resource = "";
+
+  // Create the marker
   vis_pub.publish(marker);
+
+  if (makerRemainTime > 0.0) {
+    sleep(makerRemainTime);
+    // Delete the marker
+    marker.action = visualization_msgs::Marker::DELETE;
+    vis_pub.publish(marker);
+  }
 
 }
 
- /**
- * This programm publishes a tf for every the last received pose
- */
 int main(int argc, char **argv)
 {
   ros::init(argc, argv, "com_viz");
@@ -120,12 +148,23 @@ int main(int argc, char **argv)
 
   // ROS STUFF
   n.param<std::string>("rsb_viz_scope", rsbScope, "/amiro1tobi");
-  n.param<std::string>("parent_frame", parentFrame, "world");
-  n.param<std::string>("child_frame", childFrame, "foo");
+  n.param<double>("marker_remain_time", makerRemainTime, 1.0);
+  n.param<double>("marker_scale_x", markerScaleX, 0.03);
+  n.param<double>("marker_scale_y", markerScaleY, 0.06);
+  n.param<double>("marker_scale_z", markerScaleZ, 1.0);
+  n.param<double>("marker_color_a", markerColorA, 1.0);
+  n.param<double>("marker_color_r", markerColorR, 0.0);
+  n.param<double>("marker_color_g", markerColorG, 1.0);
+  n.param<double>("marker_color_b", markerColorB, 0.0);
+
   listener = new tf::TransformListener;
   // RSB STUFF
   // Get the RSB factory
   rsb::Factory& factory = rsb::getFactory();
+
+  robotNames.push_back(std::string("amiro"));
+  robotNames.push_back(std::string("tobi"));
+  robotNames.push_back(std::string("meka"));
 
   // Prepare RSB listener for scopes
   rsb::ListenerPtr listener = factory.createListener(rsbScope);
