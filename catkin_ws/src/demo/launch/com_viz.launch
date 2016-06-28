@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+ <launch>
+
+  <arg name="src" default="tobi" />
+  <arg name="dst" default="amiro0" />
+
+  <node pkg="com_viz" type="com_viz" name="com_viz_$(arg src)$(arg dst)" respawn="true" >
+    <param name="rsb_viz_scope" value="/$(arg src)$(arg dst)" />
+    <param name="parent_frame" value="$(arg src)/base_link" />
+    <param name="child_frame" value="$(arg dst)/base_link" />
+  </node>
+
+</launch>

@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+ <launch>
+
+  <!--
+   Get an circular distribution of robots
+   n= 6; amp = 10; for rad=1 : n; disp(['x = ', num2str(amp * cos(2*pi/n*rad)), ', y = ', num2str(amp * sin(2*pi/n*rad))]); end
+  -->
+
+  <node pkg="tf" type="static_transform_publisher" name="map_tf1" args="5 8.66 0 0 0 0 world amiro0/base_link 10" />
+  <node pkg="tf" type="static_transform_publisher" name="map_tf2" args="-5 8.66 0 0 0 0 world amiro1/base_link 10" />
+  <node pkg="tf" type="static_transform_publisher" name="map_tf3" args="-10 0 0 0 0 0 world amiro2/base_link 10" />
+  <node pkg="tf" type="static_transform_publisher" name="map_tf4" args="-5 -8.66 0 0 0 0 world amiro3/base_link 10" />
+  <node pkg="tf" type="static_transform_publisher" name="map_tf5" args="5 -8.66 0 0 0 0 world tobi/base_link 10" />
+  <node pkg="tf" type="static_transform_publisher" name="map_tf6" args="10 0 0 0 0 0 world meka/base_link 10" />
+  
+  <include file="$(find demo)/launch/viz.launch">
+    <arg name="enable_tf_bridge" value="false" />  
+  </include>
+
+ </launch>
