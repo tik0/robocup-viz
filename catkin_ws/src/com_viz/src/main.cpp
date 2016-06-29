@@ -29,6 +29,8 @@ using namespace rsb;
 using namespace rsb::converter;
 
 static std::string rsbScope;
+static std::string rsbSubscope;
+static std::string rsbContent;
 
 ros::Publisher vis_pub;
 
@@ -39,6 +41,7 @@ std::vector<std::string> robotNames;
 static std::size_t markerId = 0;
 std::mutex idMtx;
 double makerRemainTime;
+int markerClass = 0;
 
 double markerScaleX;
 double markerScaleY;
@@ -56,6 +59,20 @@ void vizScope(rsb::EventPtr msg) {
   std::string robots(msg->getScope().getComponents().at(0));
   std::string state(msg->getScope().getComponents().at(1));
   std::string content(*boost::static_pointer_cast<std::string>(msg->getData()));
+
+  // Check subscope
+  if (!rsbSubscope.empty()) {
+    if ( state.compare(rsbSubscope) ) {
+      ROS_INFO("Subscope '%s' does not match '%s'/n", rsbSubscope.c_str(), state.c_str());
+    }
+  }
+
+  // Check content
+  if (!content.empty()) {
+    if ( content.compare(rsbSubscope) ) {
+      ROS_INFO("Content '%s' does not match '%s'/n", rsbContent.c_str(), content.c_str());
+    }
+  }
 
   std::string src, dst;
 
@@ -99,19 +116,27 @@ void vizScope(rsb::EventPtr msg) {
   idMtx.unlock();
 
   // Configure the marker
-  marker.type = visualization_msgs::Marker::ARROW;
-  marker.action = visualization_msgs::Marker::ADD;
-  geometry_msgs::Point child, parent;
-
-  parent.x = 0.0;
-  parent.y = 0.0;
-  parent.z = 0.0;
-  child.x = -transform.getOrigin().getX();
-  child.y = -transform.getOrigin().getY();
-  child.z = -transform.getOrigin().getZ();
-
-  marker.points.push_back(parent);
-  marker.points.push_back(child);
+  if (markerClass == visualization_msgs::Marker::ARROW) {
+    marker.type = visualization_msgs::Marker::ARROW;
+    geometry_msgs::Point child, parent;
+//    parent.x = 0.0;
+//    parent.y = 0.0;
+//    parent.z = 0.0;
+    child.x = -transform.getOrigin().getX();
+    child.y = -transform.getOrigin().getY();
+    child.z = -transform.getOrigin().getZ();
+    marker.points.push_back(parent);
+    marker.points.push_back(child);
+  } else if (markerClass == visualization_msgs::Marker::SPHERE) {
+//    child.x = -transform.getOrigin().getX();
+//    child.y = -transform.getOrigin().getY();
+//    child.z = -transform.getOrigin().getZ();
+//    marker.points.push_back(parent);
+//    marker.points.push_back(child);
+  } else {
+    ROS_ERROR("No suitable marker class for id %d. See http://wiki.ros.org/rviz/DisplayTypes/Marker", markerClass);
+    return;
+  }
 
 //  marker.pose.position.x = -transform.getOrigin().getX();
 //  marker.pose.position.y = -transform.getOrigin().getY();
@@ -130,6 +155,7 @@ void vizScope(rsb::EventPtr msg) {
   marker.mesh_resource = "";
 
   // Create the marker
+  marker.action = visualization_msgs::Marker::ADD;
   vis_pub.publish(marker);
 
   if (makerRemainTime > 0.0) {
@@ -148,6 +174,9 @@ int main(int argc, char **argv)
 
   // ROS STUFF
   n.param<std::string>("rsb_viz_scope", rsbScope, "/amiro1tobi");
+  n.param<std::string>("rsb_viz_subscope", rsbSubscope, "");
+  n.param<std::string>("rsb_viz_content", rsbContent, "");
+  n.param<int>("marker_class", markerClass, 0);
   n.param<double>("marker_remain_time", makerRemainTime, 1.0);
   n.param<double>("marker_scale_x", markerScaleX, 0.03);
   n.param<double>("marker_scale_y", markerScaleY, 0.06);
