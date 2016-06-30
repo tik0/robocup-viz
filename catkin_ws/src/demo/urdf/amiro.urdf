@@ -12,6 +12,10 @@
   <material name="white">
     <color rgba="1 1 1 1"/>
   </material>
+  
+  <material name="green">
+    <color rgba="0.26 .77 .17 1"/>
+  </material>
 
   <link name="base_link">
   </link>
@@ -61,6 +65,21 @@
     <parent link="base_link"/>
     <child link="left_wheel"/>
     <origin xyz="0 0.03 0.02"/>
+  </joint>
+  
+  <link name="indicator">
+    <visual>
+      <geometry>
+        <box size=".2 .2 .2"/>
+      </geometry>
+      <material name="green"/>
+    </visual>
+  </link>
+
+  <joint name="base_link_to_indicator" type="fixed">
+    <parent link="base_link"/>
+    <child link="indicator"/>
+    <origin xyz="0 0 1.0" rpy="0.785 0.785 0"/>
   </joint>
 
 </robot>
