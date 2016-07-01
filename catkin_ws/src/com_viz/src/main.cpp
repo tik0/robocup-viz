@@ -13,6 +13,9 @@
 #include <rst/geometry/Pose.pb.h>
 #include <rst/geometry/Translation.pb.h>
 #include <rst/geometry/Rotation.pb.h>
+#include <rsb/converter/Repository.h>
+#include <rsb/converter/PredicateConverterList.h>
+#include <rsb/converter/ByteArrayConverter.h>
 
 #include <mutex>
 #include <thread>
@@ -135,35 +138,58 @@ void vizIt(std::string robots, std::string state, std::string content) {
           }
         }
       }
-      // The rest must be the the destination
+      // The rest must be the destination
       dstRobotName = std::string(&robots.c_str()[srcRobotName.size()]);
 
       ROS_INFO("srcRobotName robot: %s\n", srcRobotName.c_str());
       ROS_INFO("dstRobotName robot: %s\n", dstRobotName.c_str());
 
-      tf::StampedTransform transform;
-      try{
-        listener->lookupTransform(dstRobotName + std::string("/base_link"), srcRobotName + std::string("/base_link"), ros::Time(0), transform);
-      }
-      catch (tf::TransformException &ex) {
-        ROS_ERROR("%s",ex.what());
+      if ( dstRobotName.empty() || srcRobotName.empty() ) {
+        ROS_WARN("Source or destination is empty");
         return;
       }
 
-      marker.header.frame_id = srcRobotName + std::string("/base_link");
       marker.header.stamp = ros::Time();
       marker.ns = "";
+      marker.scale.x = markerScaleX;
+      marker.scale.y = markerScaleY;
+      marker.scale.z = markerScaleZ;
+      marker.color.a = markerColorA;
+      marker.color.r = markerColorR;
+      marker.color.g = markerColorG;
+      marker.color.b = markerColorB;
+      marker.mesh_resource = "";
 
       // Configure the marker
       if (markerClass == visualization_msgs::Marker::ARROW) {
+        tf::StampedTransform transform;
+        geometry_msgs::Point child, parent;
         marker.type = visualization_msgs::Marker::ARROW;
-        geometry_msgs::Point child, parent /* Is alread (0,0,0)*/;
-        child.x = -transform.getOrigin().getX();
-        child.y = -transform.getOrigin().getY();
-        child.z = -transform.getOrigin().getZ();
+        marker.header.frame_id = "map";
+        try {
+          listener->lookupTransform(marker.header.frame_id, dstRobotName + std::string("/base_link"), ros::Time(0), transform);
+        } catch (tf::TransformException &ex) {
+          ROS_ERROR("%s",ex.what());
+          return;
+        }
+        child.x = transform.getOrigin().getX();
+        child.y = transform.getOrigin().getY();
+        child.z = transform.getOrigin().getZ();
+
+        try {
+          listener->lookupTransform(marker.header.frame_id, srcRobotName + std::string("/base_link"), ros::Time(0), transform);
+        } catch (tf::TransformException &ex) {
+          ROS_ERROR("%s",ex.what());
+          return;
+        }
+        parent.x = transform.getOrigin().getX();
+        parent.y = transform.getOrigin().getY();
+        parent.z = transform.getOrigin().getZ();
+
         marker.points.push_back(parent);
         marker.points.push_back(child);
       } else if (markerClass == visualization_msgs::Marker::SPHERE) {
+        marker.header.frame_id = srcRobotName + std::string("/base_link");
         marker.type = visualization_msgs::Marker::SPHERE;
       } else {
         ROS_ERROR("No suitable marker class for id %d. See http://wiki.ros.org/rviz/DisplayTypes/Marker", markerClass);
@@ -177,14 +203,7 @@ void vizIt(std::string robots, std::string state, std::string content) {
     //  marker.pose.orientation.y = transform.getRotation().getY();
     //  marker.pose.orientation.z = transform.getRotation().getZ();
     //  marker.pose.orientation.w = transform.getRotation().getW();
-      marker.scale.x = markerScaleX;
-      marker.scale.y = markerScaleY;
-      marker.scale.z = markerScaleZ;
-      marker.color.a = markerColorA;
-      marker.color.r = markerColorR;
-      marker.color.g = markerColorG;
-      marker.color.b = markerColorB;
-      marker.mesh_resource = "";
+
 
       if ( currentMarkerState == destroy ) {
         // Delete the marker
@@ -193,6 +212,9 @@ void vizIt(std::string robots, std::string state, std::string content) {
         marker.action = visualization_msgs::Marker::ADD;
       }
 
+//      if ( makerRemainTime > 0.0 ) {
+//        marker.lifetime = ros::Duration(makerRemainTime);
+//      }
   // Create/destroy the marker
   vizPub.publish(marker);
 
@@ -215,7 +237,12 @@ void vizScope(rsb::EventPtr msg) {
   if (msg->getScope().getComponents().size() > 1) {
     state = msg->getScope().getComponents().at(1);
   }
-  std::string content(*boost::static_pointer_cast<std::string>(msg->getData()));
+  std::string content;
+  try {
+    content = *boost::static_pointer_cast<std::string>(msg->getData());
+  } catch(...) {
+    return;
+  }
 
   std::thread t(vizIt, robots, state, content);
   t.detach();
@@ -255,6 +282,7 @@ int main(int argc, char **argv)
 
   // RSB STUFF
   // Get the RSB factory
+
   rsb::Factory& factory = rsb::getFactory();
 
   // Prepare RSB listener for scopes
