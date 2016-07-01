@@ -40,7 +40,14 @@
     <node pkg="pose_to_tf_bridge" type="pose_to_tf_bridge" name="pose_to_tf_bridge_tobi_node" respawn="true" >
       <param name="frame_id" value="world" />
       <param name="child_frame" value="tobi/base_link" />
-      <param name="rsb_scope" value="/ros4rsb/slampose" />
+      <param name="rsb_scope" value="/ros4rsb/slampose/tobi" />
+      <param name="rate" value="10" />
+    </node>
+    
+    <node pkg="pose_to_tf_bridge" type="pose_to_tf_bridge" name="pose_to_tf_bridge_meka_node" respawn="true" >
+      <param name="frame_id" value="world" />
+      <param name="child_frame" value="tobi/base_link" />
+      <param name="rsb_scope" value="/ros4rsb/slampose/meka" />
       <param name="rate" value="10" />
     </node>
   </group>
@@ -96,8 +103,8 @@
     <param name="rsb_viz_content" value="entered" /> <!--The content of the msg must be "entered", to create the marker-->
     <param name="rsb_viz_destroy_content" value="left" /> <!--The content of the msg must be "left", to destroy the marker-->
     <param name="marker_remain_time" value="-1.0" /> <!--Disable marker destruction after a time by setting a negative value-->
-    <param name="marker_scale_x" value="10.0" />
-    <param name="marker_scale_y" value="10.0" />
+    <param name="marker_scale_x" value="5.0" />
+    <param name="marker_scale_y" value="5.0" />
     <param name="marker_scale_z" value="0.05" />
     <param name="marker_color_a" value="1.0" />
     <param name="marker_color_r" value="1.0" />
