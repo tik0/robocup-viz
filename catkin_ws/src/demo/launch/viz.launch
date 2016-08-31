@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
  <launch>
 
-  <arg name="map_yaml" default="$(find maps)/maps/Leipzig_Arena_A.yaml" />
+  <arg name="map_yaml" default="$(find maps)/maps/clf_final.yaml" />
   <arg name="enable_tf_bridge" default="true" />
 
   <!-- publishes the map -->
