@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
  <launch>
 
-  <arg name="map_yaml" default="$(find maps)/maps/clf_final.yaml" />
+  <arg name="map_yaml" default="$(find maps)/maps/Leipzig_Arena_A.yaml" />
   <arg name="enable_tf_bridge" default="true" />
 
   <!-- publishes the map -->
@@ -23,19 +23,9 @@
       <param name="rate" value="10" />
     </node>
 
-    <node pkg="pose_to_tf_bridge" type="pose_to_tf_bridge" name="pose_to_tf_bridge_amiro2_node" respawn="true" >
-      <param name="frame_id" value="world" />
-      <param name="child_frame" value="amiro2/base_link" />
-      <param name="rsb_scope" value="/amiro2/pose" />
-      <param name="rate" value="10" />
-    </node>
-    
-    <node pkg="pose_to_tf_bridge" type="pose_to_tf_bridge" name="pose_to_tf_bridge_amiro3_node" respawn="true" >
-      <param name="frame_id" value="world" />
-      <param name="child_frame" value="amiro3/base_link" />
-      <param name="rsb_scope" value="/amiro3/pose" />
-      <param name="rate" value="10" />
-    </node>
+    <!-- Static TF for the AMiRo at the door -->
+    <node pkg="tf" type="static_transform_publisher" name="map_tf_amiro_door" args="30 18 0 0 0 0 world amiro2/base_link 10" />
+    <node pkg="tf" type="static_transform_publisher" name="map_tf_meka" args="29.3 17 0 -1.1 0 0 world meka/base_link 10" />
     
     <node pkg="pose_to_tf_bridge" type="pose_to_tf_bridge" name="pose_to_tf_bridge_tobi_node" respawn="true" >
       <param name="frame_id" value="world" />
@@ -44,12 +34,12 @@
       <param name="rate" value="10" />
     </node>
     
-    <node pkg="pose_to_tf_bridge" type="pose_to_tf_bridge" name="pose_to_tf_bridge_meka_node" respawn="true" >
+<!--    <node pkg="pose_to_tf_bridge" type="pose_to_tf_bridge" name="pose_to_tf_bridge_meka_node" respawn="true" >
       <param name="frame_id" value="world" />
-      <param name="child_frame" value="tobi/base_link" />
+      <param name="child_frame" value="meka/base_link" />
       <param name="rsb_scope" value="/ros4rsb/slampose/meka" />
       <param name="rate" value="10" />
-    </node>
+    </node>-->
   </group>
 
   <!-- convert ROS pose to RSB pose (for setting current pose) -->
@@ -62,22 +52,7 @@
     <param name="rsb_scope" value="/setPosition/1" />
     <param name="ros_topic" value="/initialpose/1" />
   </node>
-  
-  <node pkg="rospose_to_rsbpose_bridge" type="rospose_to_rsbpose_bridge" name="rospose_to_rsbpose_bridge_node_2" respawn="true" >
-    <param name="rsb_scope" value="/setPosition/2" />
-    <param name="ros_topic" value="/initialpose/2" />
-  </node>
-  
-  <node pkg="rospose_to_rsbpose_bridge" type="rospose_to_rsbpose_bridge" name="rospose_to_rsbpose_bridge_node_3" respawn="true" >
-    <param name="rsb_scope" value="/setPosition/3" />
-    <param name="ros_topic" value="/initialpose/3" />
-  </node>
 
-  <!-- convert ROS pose to RSB pose (for setting navigation goal) -->
-  <node pkg="navgoal_to_rsbpose_bridge" type="navgoal_to_rsbpose_bridge" name="navgoal_to_rsbpose_bridge_node_0" respawn="true" >
-    <param name="rsb_scope" value="/setTargetPose/0" />
-    <param name="ros_topic" value="/move_base_simple/goal/0" />
-  </node>
 
   <!-- visualize RSB communication -->
   <node pkg="com_viz" type="com_viz" name="com_viz_state" respawn="true" >
@@ -85,14 +60,14 @@
     <param name="rsb_viz_subscope" value="" /> <!--Don't care about the subscope-->
     <param name="rsb_viz_content" value="" /> <!--Don't care about the content-->
     <param name="rsb_viz_destroy_content" value="" /> <!--We don't want to have a specific message content, which destroys the marker-->
-    <param name="marker_remain_time" value="1.0" /> <!--Marker is deleted after 1 second-->
+    <param name="marker_remain_time" value="3.0" /> <!--Marker is deleted after 1 second-->
     <param name="marker_scale_x" value="0.03" />
     <param name="marker_scale_y" value="0.06" />
     <param name="marker_scale_z" value="1.0" />
     <param name="marker_color_a" value="1.0" />
     <param name="marker_color_r" value="0.0" />
-    <param name="marker_color_g" value="1.0" />
-    <param name="marker_color_b" value="0.0" />
+    <param name="marker_color_g" value="0.74" />
+    <param name="marker_color_b" value="1.0" />
     <param name="marker_class" value="0" /> <!--Arrow-->
   </node>
   
@@ -103,30 +78,25 @@
     <param name="rsb_viz_content" value="entered" /> <!--The content of the msg must be "entered", to create the marker-->
     <param name="rsb_viz_destroy_content" value="left" /> <!--The content of the msg must be "left", to destroy the marker-->
     <param name="marker_remain_time" value="-1.0" /> <!--Disable marker destruction after a time by setting a negative value-->
-    <param name="marker_scale_x" value="5.0" />
-    <param name="marker_scale_y" value="5.0" />
+    <param name="marker_scale_x" value="2.0" />
+    <param name="marker_scale_y" value="2.0" />
     <param name="marker_scale_z" value="0.05" />
-    <param name="marker_color_a" value="1.0" />
+    <param name="marker_color_a" value="0.5" />
     <param name="marker_color_r" value="1.0" />
     <param name="marker_color_g" value="0.0" />
     <param name="marker_color_b" value="0.0" />
     <param name="marker_class" value="2" /> <!--Spheer-->
   </node>
   
+  <!-- convert ROS pose to RSB pose (for setting navigation goal) -->
+  <node pkg="navgoal_to_rsbpose_bridge" type="navgoal_to_rsbpose_bridge" name="navgoal_to_rsbpose_bridge_node_0" respawn="true" >
+    <param name="rsb_scope" value="/setTargetPose/0" />
+    <param name="ros_topic" value="/move_base_simple/goal/0" />
+  </node>
 
   <node pkg="navgoal_to_rsbpose_bridge" type="navgoal_to_rsbpose_bridge" name="navgoal_to_rsbpose_bridge_node_1" respawn="true" >
     <param name="rsb_scope" value="/setTargetPose/1" />
     <param name="ros_topic" value="/move_base_simple/goal/1" />
-  </node>
-  
-  <node pkg="navgoal_to_rsbpose_bridge" type="navgoal_to_rsbpose_bridge" name="navgoal_to_rsbpose_bridge_node_2" respawn="true" >
-    <param name="rsb_scope" value="/setTargetPose/2" />
-    <param name="ros_topic" value="/move_base_simple/goal/2" />
-  </node>
-  
-  <node pkg="navgoal_to_rsbpose_bridge" type="navgoal_to_rsbpose_bridge" name="navgoal_to_rsbpose_bridge_node_3" respawn="true" >
-    <param name="rsb_scope" value="/setTargetPose/3" />
-    <param name="ros_topic" value="/move_base_simple/goal/3" />
   </node>
   
   <!-- display path -->
@@ -138,16 +108,6 @@
   <node pkg="rsb_path_to_ros_path" type="rsb_path_to_ros_path_node" name="rsb_path_to_ros_path_node_1" respawn="true">
     <param name="rsb_scope" value="/amiro1/path" />
     <param name="ros_topic" value="/amiro1/path" />
-  </node>
-  
-  <node pkg="rsb_path_to_ros_path" type="rsb_path_to_ros_path_node" name="rsb_path_to_ros_path_node_2" respawn="true">
-    <param name="rsb_scope" value="/amiro2/path" />
-    <param name="ros_topic" value="/amiro2/path" />
-  </node>
-  
-  <node pkg="rsb_path_to_ros_path" type="rsb_path_to_ros_path_node" name="rsb_path_to_ros_path_node_3" respawn="true">
-    <param name="rsb_scope" value="/amiro3/path" />
-    <param name="ros_topic" value="/amiro3/path" />
   </node>
   
   <node pkg="tf" type="static_transform_publisher" name="map_tf" args="0 0 0 0 0 0 world map 10" />
@@ -171,7 +131,7 @@
     <arg name="model_prefix" value="meka" />
   </include>
   
-  <!-- ROBOT MODELS: AMiRo0 -->
+  <!-- ROBOT MODELS: AMiRo0 at the entrance door -->
   <!--<node pkg="tf" type="static_transform_publisher" name="amiro0_tf" args="12 12.5 0 1 0 0 world amiro0/base_link 10"/>-->
   <include file="$(find demo)/launch/robot_viz.xml">
     <arg name="description" value="$(find xacro)/xacro.py $(find demo)/urdf/amiro.urdf" />
@@ -180,7 +140,7 @@
     <arg name="model_prefix" value="amiro0" />
   </include>
   
-  <!-- ROBOT MODELS: AMiRo1 -->
+  <!-- ROBOT MODELS: AMiRo1 at the hand-over point -->
   <!--<node pkg="tf" type="static_transform_publisher" name="amiro1_tf" args="12 12 0 1 0 0 world amiro1/base_link 10"/>-->
   <include file="$(find demo)/launch/robot_viz.xml">
     <arg name="description" value="$(find xacro)/xacro.py $(find demo)/urdf/amiro.urdf" />
@@ -189,22 +149,13 @@
     <arg name="model_prefix" value="amiro1" />
   </include>
   
-  <!-- ROBOT MODELS: AMiRo2 -->
+  <!-- ROBOT MODELS: Static AMiRo2 at the second entrance door acting as simple waypoint -->
   <!--<node pkg="tf" type="static_transform_publisher" name="amiro2_tf" args="12.5 12.5 0 1 0 0 world amiro2/base_link 10"/>-->
   <include file="$(find demo)/launch/robot_viz.xml">
     <arg name="description" value="$(find xacro)/xacro.py $(find demo)/urdf/amiro.urdf" />
     <arg name="use_joint_state_publisher" value="true"/>
     <arg name="gui" value="false" />  
     <arg name="model_prefix" value="amiro2" />
-  </include>
-  
-  <!-- ROBOT MODELS: AMiRo3 -->
-  <!--<node pkg="tf" type="static_transform_publisher" name="amiro3_tf" args="13 13 0 1 0 0 world amiro3/base_link 10"/>-->
-  <include file="$(find demo)/launch/robot_viz.xml">
-    <arg name="description" value="$(find xacro)/xacro.py $(find demo)/urdf/amiro.urdf" />
-    <arg name="use_joint_state_publisher" value="true"/>
-    <arg name="gui" value="false" />  
-    <arg name="model_prefix" value="amiro3" />
   </include>
 
   <node name="rviz" pkg="rviz" type="rviz" args="-d $(find demo)/demo.rviz" respawn="true" />

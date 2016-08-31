@@ -212,19 +212,19 @@ void vizIt(std::string robots, std::string state, std::string content) {
         marker.action = visualization_msgs::Marker::ADD;
       }
 
-//      if ( makerRemainTime > 0.0 ) {
-//        marker.lifetime = ros::Duration(makerRemainTime);
-//      }
+      if ( makerRemainTime > 0.0 ) {
+        marker.lifetime = ros::Duration(makerRemainTime);
+      }
   // Create/destroy the marker
   vizPub.publish(marker);
 
   // Wait and destroy the marker
-  if ( makerRemainTime > 0.0 ) {
-    // Delete the marker
-    sleep(makerRemainTime);
-    marker.action = visualization_msgs::Marker::DELETE;
-    vizPub.publish(marker);
-  }
+//  if ( makerRemainTime > 0.0 ) {
+//    // Delete the marker
+//    sleep(makerRemainTime);
+//    marker.action = visualization_msgs::Marker::DELETE;
+//    vizPub.publish(marker);
+//  }
 }
 
 void vizScope(rsb::EventPtr msg) {
@@ -282,8 +282,10 @@ int main(int argc, char **argv)
 
   // RSB STUFF
   // Get the RSB factory
-
   rsb::Factory& factory = rsb::getFactory();
+
+  // Set the logger level to OFF, so that we don't see WARN messages by not having a given converter
+  rsc::logging::LoggerFactory::getInstance().getLogger()->setLevel(rsc::logging::Logger::Level::LEVEL_OFF);
 
   // Prepare RSB listener for scopes
   rsb::ListenerPtr listener = factory.createListener(expectedScope);
